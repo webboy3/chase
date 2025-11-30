@@ -1363,6 +1363,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const formData = new FormData(this);
     formData.append("access_key", "42ad2877-f81e-4e64-9fc2-51d25c4a455e");
 
+    // ✅ Add required fields from Step 3
+    formData.append("name", document.getElementById("attendeeName").value);
+    formData.append("email", document.getElementById("attendeeEmail").value);
+
+    // (Optional) Add event details from Step 2
+    formData.append("event_name", document.getElementById("eventName").value);
+    formData.append("event_date", document.getElementById("eventDate").value);
+    formData.append("event_time", document.getElementById("eventTime").value);
+    formData.append("event_location", document.getElementById("eventLocation").value);
+
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
