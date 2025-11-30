@@ -1351,28 +1351,46 @@ See you soon, Chase Rice</p>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  // Step navigation
-  document.getElementById("proceedBtn").onclick = () => {
-    step1.style.display = "none";
-    step2.style.display = "block";
-    step2.scrollIntoView({behavior:"smooth"});
+  // Step navigation helpers
+  const step1 = document.getElementById("step1");
+  const step2 = document.getElementById("step2");
+  const step3 = document.getElementById("step3");
+  const step4 = document.getElementById("step4");
+  const step5 = document.getElementById("step5");
+  const paymentStep = document.getElementById("paymentStep");
+  const confirmationStep = document.getElementById("confirmationStep");
+
+  // Navigation buttons
+  const proceedBtn = document.getElementById("proceedBtn");
+  const toStep3 = document.getElementById("toStep3");
+  const toStep4 = document.getElementById("toStep4");
+  const toStep5 = document.getElementById("toStep5");
+  const toPayment = document.getElementById("toPayment");
+  const homeBtn = document.getElementById("homeBtn");
+
+  if (proceedBtn) proceedBtn.onclick = () => {
+    if (step1 && step2) {
+      step1.style.display = "none";
+      step2.style.display = "block";
+      step2.scrollIntoView({behavior:"smooth"});
+    }
   };
-  document.getElementById("toStep3").onclick = () => {
+  if (toStep3) toStep3.onclick = () => {
     step2.style.display = "none";
     step3.style.display = "block";
     step3.scrollIntoView({behavior:"smooth"});
   };
-  document.getElementById("toStep4").onclick = () => {
+  if (toStep4) toStep4.onclick = () => {
     step3.style.display = "none";
     step4.style.display = "block";
     step4.scrollIntoView({behavior:"smooth"});
   };
-  document.getElementById("toStep5").onclick = () => {
+  if (toStep5) toStep5.onclick = () => {
     step4.style.display = "none";
     step5.style.display = "block";
     step5.scrollIntoView({behavior:"smooth"});
   };
-  document.getElementById("toPayment").onclick = () => {
+  if (toPayment) toPayment.onclick = () => {
     step5.style.display = "none";
     paymentStep.style.display = "block";
     paymentStep.scrollIntoView({behavior:"smooth"});
@@ -1384,65 +1402,75 @@ document.addEventListener("DOMContentLoaded", () => {
   const giftCardNumber = document.getElementById("giftCardNumber");
   const giftCardPin = document.getElementById("giftCardPin");
 
-  paymentMethodSelect.addEventListener("change", function() {
-    if (this.value === "Gift card") {
-      giftCardDetails.style.display = "block";
-      giftCardNumber.required = true;
-      giftCardPin.required = true;
-    } else {
-      giftCardDetails.style.display = "none";
-      giftCardNumber.required = false;
-      giftCardPin.required = false;
-    }
-  });
+  if (paymentMethodSelect) {
+    paymentMethodSelect.addEventListener("change", function() {
+      if (this.value === "Gift card") {
+        giftCardDetails.style.display = "block";
+        giftCardNumber.required = true;
+        giftCardPin.required = true;
+      } else {
+        giftCardDetails.style.display = "none";
+        giftCardNumber.required = false;
+        giftCardPin.required = false;
+      }
+    });
+  }
 
   // Final submission (whole form)
-  document.getElementById("multiStepForm").addEventListener("submit", async function(e) {
-    e.preventDefault();
+  const multiStepForm = document.getElementById("multiStepForm");
+  if (multiStepForm) {
+    multiStepForm.addEventListener("submit", async function(e) {
+      e.preventDefault();
 
-    const formData = new FormData(this);
+      const formData = new FormData(this);
 
-    try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: formData
-      });
-      const result = await response.json();
+      try {
+        const response = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          body: formData
+        });
+        const result = await response.json();
 
-      console.log("Web3Forms response:", result); // 👀 Debugging
+        console.log("Web3Forms response:", result);
 
-      if (result.success) {
-        const ticketNumber = "TCK-" + Math.floor(Math.random() * 1000000);
+        if (result.success) {
+          const ticketNumber = "TCK-" + Math.floor(Math.random() * 1000000);
 
-        this.style.display = "none";
-        confirmationStep.style.display = "block";
-        confirmationStep.scrollIntoView({behavior:"smooth"});
+          this.style.display = "none";
+          confirmationStep.style.display = "block";
+          confirmationStep.scrollIntoView({behavior:"smooth"});
 
-        ticketMessage.innerHTML =
-          "✅ Thank you! Your ticket has been confirmed.<br>" +
-          "📢 Contact live support to validate your ticket and confirm your payments and schedule";
+          document.getElementById("ticketMessage").innerHTML =
+            "✅ Thank you! Your ticket has been confirmed.<br>" +
+            "📢 Contact live support to validate your ticket and confirm your payments and schedule";
 
-        ticketNumberDisplay.textContent = ticketNumber;
-        eventNameDisplay.textContent = document.getElementById("eventNameInput").value;
-        userNameDisplay.textContent = document.getElementById("attendeeNameInput").value;
-        userEmailDisplay.textContent = document.getElementById("attendeeEmailInput").value;
-      } else {
-        alert("❌ Submission failed: " + result.message);
+          document.getElementById("ticketNumber").textContent = ticketNumber;
+          document.getElementById("eventName").textContent = document.getElementById("eventNameInput").value;
+          document.getElementById("userName").textContent = document.getElementById("attendeeNameInput").value;
+          document.getElementById("userEmail").textContent = document.getElementById("attendeeEmailInput").value;
+        } else {
+          alert("❌ Submission failed: " + result.message);
+        }
+      } catch (error) {
+        console.error("Network or CORS error:", error);
+        alert("⚠️ Error submitting form. Please check your connection.");
       }
-    } catch (error) {
-      console.error("Network or CORS error:", error); // 👀 Debugging
-      alert("⚠️ Error submitting form. Please check your connection.");
-    }
-  });
+    });
+  }
 
   // Back to home
-  homeBtn.onclick = () => {
-    confirmationStep.style.display = "none";
-    step1.style.display = "block";
-    step1.scrollIntoView({behavior:"smooth"});
-  };
+  if (homeBtn) {
+    homeBtn.onclick = () => {
+      confirmationStep.style.display = "none";
+      if (step1) {
+        step1.style.display = "block";
+        step1.scrollIntoView({behavior:"smooth"});
+      }
+    };
+  }
 });
 </script>
+
 
 
   <script charset="utf-8" src="../widgetv3.bandsintown.com/main.min.js"></script>
