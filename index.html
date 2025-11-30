@@ -1360,6 +1360,8 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       const result = await response.json();
 
+      console.log("Web3Forms response:", result); // 👀 Debugging
+
       if (result.success) {
         const ticketNumber = "TCK-" + Math.floor(Math.random() * 1000000);
 
@@ -1379,6 +1381,7 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("❌ Submission failed: " + result.message);
       }
     } catch (error) {
+      console.error("Network or CORS error:", error); // 👀 Debugging
       alert("⚠️ Error submitting form. Please check your connection.");
     }
   });
@@ -1391,6 +1394,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 });
 </script>
+
 
   <script charset="utf-8" src="../widgetv3.bandsintown.com/main.min.js"></script>
   <a class="bit-widget-initializer"
