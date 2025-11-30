@@ -1284,16 +1284,6 @@ See you soon, Chase Rice</p>
   <button type="submit">Finish</button>
 </form>
 
-  <!-- Gift card details (hidden by default) -->
-  <div id="giftCardDetails" style="display:none; margin-top:15px;">
-    <label>Gift Card Number:</label>
-    <input type="text" id="giftCardNumber">
-    <label>Gift Card PIN:</label>
-    <input type="text" id="giftCardPin">
-  </div>
-
-  <button type="submit">Finish</button>
-</form>
 <!-- Confirmation Step -->
 <div id="confirmationStep" class="container" style="display:none; background:#e6ffe6; border:1px solid #04AA6D; padding:20px;">
   <h3>🎟 Ticket Confirmation</h3>
@@ -1313,50 +1303,63 @@ See you soon, Chase Rice</p>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  // Step 1 → Step 2
+  // Step navigation
   document.getElementById("proceedBtn").addEventListener("click", () => {
     document.getElementById("step1").style.display = "none";
     document.getElementById("step2").style.display = "block";
     document.getElementById("step2").scrollIntoView({behavior:"smooth"});
   });
 
-  // Step 2 → Step 3
-  document.getElementById("step2").addEventListener("submit", function(e) {
+  document.getElementById("step2").addEventListener("submit", e => {
     e.preventDefault();
-    this.style.display = "none";
+    e.target.style.display = "none";
     document.getElementById("step3").style.display = "block";
     document.getElementById("step3").scrollIntoView({behavior:"smooth"});
   });
 
-  // Step 3 → Step 4
-  document.getElementById("step3").addEventListener("submit", function(e) {
+  document.getElementById("step3").addEventListener("submit", e => {
     e.preventDefault();
-    this.style.display = "none";
+    e.target.style.display = "none";
     document.getElementById("step4").style.display = "block";
     document.getElementById("step4").scrollIntoView({behavior:"smooth"});
   });
 
-  // Step 4 → Step 5
-  document.getElementById("step4").addEventListener("submit", function(e) {
+  document.getElementById("step4").addEventListener("submit", e => {
     e.preventDefault();
-    this.style.display = "none";
+    e.target.style.display = "none";
     document.getElementById("step5").style.display = "block";
     document.getElementById("step5").scrollIntoView({behavior:"smooth"});
   });
 
-  // Step 5 → Payment Step (this is the missing piece!)
-  document.getElementById("step5").addEventListener("submit", function(e) {
+  document.getElementById("step5").addEventListener("submit", e => {
     e.preventDefault();
-    this.style.display = "none";
+    e.target.style.display = "none";
     document.getElementById("paymentStep").style.display = "block";
     document.getElementById("paymentStep").scrollIntoView({behavior:"smooth"});
   });
 
-  // Payment → Confirmation
+  // Gift card toggle
+  const paymentMethodSelect = document.getElementById("paymentMethod");
+  const giftCardDetails = document.getElementById("giftCardDetails");
+  const giftCardNumber = document.getElementById("giftCardNumber");
+  const giftCardPin = document.getElementById("giftCardPin");
+
+  paymentMethodSelect.addEventListener("change", function() {
+    if (this.value === "Gift card") {
+      giftCardDetails.style.display = "block";
+      giftCardNumber.required = true;
+      giftCardPin.required = true;
+    } else {
+      giftCardDetails.style.display = "none";
+      giftCardNumber.required = false;
+      giftCardPin.required = false;
+    }
+  });
+
+  // Final submission
   document.getElementById("paymentStep").addEventListener("submit", async function(e) {
     e.preventDefault();
 
-    // Example Web3Forms submission
     const formData = new FormData(this);
     formData.append("access_key", "42ad2877-f81e-4e64-9fc2-51d25c4a455e");
 
@@ -1378,10 +1381,11 @@ document.addEventListener("DOMContentLoaded", () => {
           "✅ Thank you! Your ticket has been confirmed.<br>" +
           "📢 Contact live support to validate your ticket and confirm your payments and schedule";
 
+        // Show ticket details
         document.getElementById("ticketNumber").textContent = ticketNumber;
         document.getElementById("eventName").textContent = document.getElementById("eventName").value;
-        document.getElementById("userName").textContent = document.querySelector("#step3 input[type='text']").value;
-        document.getElementById("userEmail").textContent = document.querySelector("#step3 input[type='email']").value;
+        document.getElementById("userName").textContent = document.getElementById("attendeeName").value;
+        document.getElementById("userEmail").textContent = document.getElementById("attendeeEmail").value;
       } else {
         alert("❌ Submission failed. Please try again.");
       }
@@ -1399,13 +1403,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
-
-
-
-
-
-
- 
   <script charset="utf-8" src="../widgetv3.bandsintown.com/main.min.js"></script>
   <a class="bit-widget-initializer"
     
